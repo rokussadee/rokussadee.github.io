@@ -68,8 +68,11 @@ async function getUserData() {
         }
       
         let html = `
-        <div class="album-block-container ${index == 0 ? "open" : "closed"}">
- <div class="vert-title-container">         <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3> </div>
+        <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
+          <div data-index="${index}" class="vert-title-container">         
+            <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
+            <img src="${object.thumbnail}">
+          </div>
           <h2>${object.title}</h2>
           <h4>${object.artists.toString().replace(/,/g, ", ")}</h4>
           <div class="album-block">
@@ -170,7 +173,7 @@ fetch("../mockdata.json")
         }
       
         let html = `
-        <div class="album-block-container ${index == 0 ? "open" : "closed"}">
+        <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
           <div data-index="${index}" class="vert-title-container">         
             <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
             <img src="${object.thumbnail}">
@@ -194,17 +197,22 @@ fetch("../mockdata.json")
       document.getElementById('favorites').innerHTML = templateLiterals
     })
     .then(function() {
-      [...document.querySelectorAll(".vert-title-container")].forEach(function (item) {
+      [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
         item.addEventListener('click', (e) => {
-          console.log(e.target.parentNode)
-          if(e.currentTarget.parentNode.classList.contains("open")) {
-            e.currentTarget.parentNode.classList.replace("open", "closed")
-          } else if (e.currentTarget.parentNode.classList.contains("closed"))  {
-            e.currentTarget.parentNode.classList.replace("closed", "open")
+          console.log(e.currentTarget, e.target)
+          e.currentTarget == e.target ? console.log("clicked frame") : console.log("other element")
+          if(e.currentTarget.classList.contains("closed")) {
+            dynamicCards(e.currentTarget.getAttribute("data-index"))
           }
         });
       });
     });
+
+function dynamicCards(index) {
+  [...document.querySelectorAll(".album-block-container")].forEach(function(item) {
+    item.getAttribute("data-index") == index ? item.classList.replace("closed", "open") : item.classList.replace("open", "closed")
+  });
+}
 
 // getUserData(); 
 
