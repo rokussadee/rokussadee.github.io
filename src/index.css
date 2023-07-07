@@ -239,10 +239,6 @@ input[type="checkbox"]:checked + label:before {
     background-color: transparent;
 }
 
-input[type="checkbox"] + label:after {
-    animation: checkbox-uncheck 125ms 250ms cubic-bezier(.2,.4,.23,1) forwards;
-}
- 
 input[type="checkbox"]:checked + label:after {
    font-family: "Material Icons";
     content: "\e87d";
@@ -272,26 +268,6 @@ input[type="checkbox"]:checked + label:after {
     opacity: 1;
     height: .5em;    
     transform: translate3d(0,-.5em,0) ;
-  }
-}
-
-@keyframes checkbox-uncheck {
-  0%{
-    opacity: 0;
-    transform: scale(0);
-    height: 0;
-  }
-  
-  33%{
-    opacity: .2;
-    height: 0;
-    transform: scale(.3);
-  }
-  
-  100%{    
-    opacity: 1;
-    transform: scale(1);
-    height: .5em;    
   }
 }
 

@@ -167,15 +167,6 @@ fetch("../mockdata.json")
                 </div> 
               </li>
             `;
-//       <button class="add-container">
-//                      <span class="filled-heart material-icons">
-//                        favorite
-//                      </span>
-//                      <span class="outlined-heart material-symbols-outlined active">
-//                        favorite
-//                      </span>
-//                    </button>
-
             listingsHtml += listingHtml;
           }
         }
@@ -214,12 +205,6 @@ fetch("../mockdata.json")
           }
         });
       });
-
-      [...document.querySelectorAll(".add-container")].forEach(function (button) {
-        button.addEventListener('click', (e) => {
-//          button.value
-        })
-      })
     });
 
 function dynamicCards(index) {
