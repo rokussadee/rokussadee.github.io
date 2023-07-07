@@ -160,14 +160,22 @@ fetch("../mockdata.json")
                     <div>
                       <p><span>${listing.price}</span></p>
                     </div>
-                    <button class="add-container">
-                      <span>+</span>
-                    </button>
-                  </figure>
+                    <input class="add-container" type="checkbox" id="${key}-heart"/>
+                    <label for="${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
+                    </label>
+                    </figure>
                 </div> 
               </li>
             `;
-      
+//       <button class="add-container">
+//                      <span class="filled-heart material-icons">
+//                        favorite
+//                      </span>
+//                      <span class="outlined-heart material-symbols-outlined active">
+//                        favorite
+//                      </span>
+//                    </button>
+
             listingsHtml += listingHtml;
           }
         }
@@ -206,6 +214,12 @@ fetch("../mockdata.json")
           }
         });
       });
+
+      [...document.querySelectorAll(".add-container")].forEach(function (button) {
+        button.addEventListener('click', (e) => {
+//          button.value
+        })
+      })
     });
 
 function dynamicCards(index) {
@@ -220,4 +234,3 @@ function dynamicCards(index) {
 //  item.addEventListener('click', (e) =>> {
 //   alert(e.target.getAttribute("data-index")) 
 //  })
-//}

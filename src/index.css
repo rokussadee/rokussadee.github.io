@@ -194,6 +194,105 @@ p span {
   position: absolute;
   right: 0;
   top: 0;
+  background: none;
+  border: none;
+}
+
+.add-container .active {
+  opacity:1;
+}
+
+.add-container span {
+ position: absolute;
+ top:0;
+ right: 0;
+ opacity: 0;
+}
+
+.outlined-heart {
+  color: black;
+}
+
+.filled-heart {
+  color:red;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label:before {
+  font-family: "Material Symbols Outlined";
+    content: "\e87d";
+    font-size: 30px;
+    top: 0;
+    right: 0;
+    border: 1px solid transparent;    
+    border-radius: 3px;
+    display: block;
+    position: absolute;
+	transition:  .5s ease;
+}
+ 
+input[type="checkbox"]:checked + label:before {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+input[type="checkbox"] + label:after {
+    animation: checkbox-uncheck 125ms 250ms cubic-bezier(.2,.4,.23,1) forwards;
+}
+ 
+input[type="checkbox"]:checked + label:after {
+   font-family: "Material Icons";
+    content: "\e87d";
+    font-size: 30px;
+    position: absolute;
+    top: .5em;
+    right: 1px;
+	color: red;
+/*	transition:  .5s ease; */
+  opacity: 0;
+  transform-origin: 0% 100%;
+  animation: checkbox-check 125ms 250ms cubic-bezier(.2,.4,.23,1) forwards;
+}
+
+@keyframes checkbox-check {
+  0%{
+    opacity: 0;
+    height: 0;
+    transform: translate3d(0,0,0);
+  }
+  33%{
+    opacity: .2;
+    height: 0;
+    transform: translate3d(0,-.2em,0) ;
+  }
+  100%{    
+    opacity: 1;
+    height: .5em;    
+    transform: translate3d(0,-.5em,0) ;
+  }
+}
+
+@keyframes checkbox-uncheck {
+  0%{
+    opacity: 0;
+    transform: scale(0);
+    height: 0;
+  }
+  
+  33%{
+    opacity: .2;
+    height: 0;
+    transform: scale(.3);
+  }
+  
+  100%{    
+    opacity: 1;
+    transform: scale(1);
+    height: .5em;    
+  }
 }
 
 hr {
