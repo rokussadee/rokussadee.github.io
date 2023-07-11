@@ -3,7 +3,6 @@ import instance from "./axios.js"
 async function getUserData() {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('access_token');
-  console.log(token)
   let albumList;
 
   try {
@@ -55,7 +54,7 @@ async function getUserData() {
                     <div>
                       <p><span>${listing.price}</span></p>
                     </div>
-                    <input class="add-container" type="checkbox" id="${index}_${key}-heart"/>
+                    <input class="add-container" type="checkbox" id="${index}_${key}-heart" data-id="${listing.link}" />
                     <label for="${index}_${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
                     </label>
                   </figure>
@@ -91,7 +90,7 @@ async function getUserData() {
       });
       document.getElementById('favorites').innerHTML = templateLiterals
     })
-    .then(function() {
+    .then(() => {
       [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
         item.addEventListener('click', (e) => {
           console.log(e.currentTarget, e.target)
@@ -101,7 +100,20 @@ async function getUserData() {
           }
         });
       });
-    });
+    })
+    .then(async () => {
+      const user_id = await getUserId();
+      [...document.querySelectorAll("input.add-container")].forEach(function(item) {
+        console.log(item.getAttribute("data-id"))
+//        checkWishlist(user_id, item)
+        item.addEventListener('change', (e) => {
+          const item_link = e.target.getAttribute("data-id")
+          console.log(item_link)
+          console.log(e.target.checked)
+          e.target.checked ? addItemToWishlist(user_id, item_link) : removeItemFromWishlist(user_id, item_link)
+        })
+      })
+    })
   } catch (e) {
     console.log(e.message)
   }
@@ -222,6 +234,54 @@ function dynamicCards(index) {
   [...document.querySelectorAll(".album-block-container")].forEach(function(item) {
     item.getAttribute("data-index") == index ? item.classList.replace("closed", "open") : item.classList.replace("open", "closed")
   });
+};
+
+async function getUserId() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('access_token');
+
+  let user_id = await instance({
+    method: 'get',
+    url: '/api/getUserId',
+    transformResponse: [(data) => {
+      return JSON.parse(data)
+    }]
+  })
+  .then(response => {
+    console.log('user_id:', response.data.toString())
+    return response.data.toString()
+  })
+  .catch(e => {
+    console.log(e)
+  })
+
+  return user_id
+}
+
+async function checkWishlist(user_id, item_link) {
+  
+}
+
+async function addItemToWishlist(user_id, item_link) {
+  console.log('item_link:', item_link)
+  let data = await instance({
+    method: 'post',
+    url: '/crud/additem',
+    data: {
+      user_id: user_id,
+      item_link: item_link
+//      title: ,
+    },
+    transformResponse: [(data) => {
+      return JSON.parse(data)
+    }]
+  })
+
+  console.log(data)
+  return data 
+}
+
+function removeItemFromWishlist(item_link) {
 }
 
  getUserData(); 
