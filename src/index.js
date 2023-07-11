@@ -91,6 +91,17 @@ async function getUserData() {
       });
       document.getElementById('favorites').innerHTML = templateLiterals
     })
+    .then(function() {
+      [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
+        item.addEventListener('click', (e) => {
+          console.log(e.currentTarget, e.target)
+          e.currentTarget == e.target ? console.log("clicked frame") : console.log("other element")
+          if(e.currentTarget.classList.contains("closed")) {
+            dynamicCards(e.currentTarget.getAttribute("data-index"))
+          }
+        });
+      });
+    });
   } catch (e) {
     console.log(e.message)
   }
@@ -115,98 +126,98 @@ async function getAlbumListings(spotifyList) {
   return data.data
 }
 
-fetch("../mockdata.json")
-    .then(response => response.json())
-    .then(data => {
-      let dataset = data.filter(function({id}) {
-        return !this.has(id) && this.add(id)
-      }, new Set)
-      let templateLiterals
-      dataset.forEach(async (object, index) => {
-        let listingsHtml = '';
-        console.log(object)
-      
-        for (const key in object.listings) {
-          if (object.listings.hasOwnProperty(key)) {
-            const listing = object.listings[key];
-
-            const listingHtml = `
-              <li>
-                <div class="listing">
-                  <article>
-                    <h3>${listing.discogs_title}</h3>
-                    <div class="listing-info">
-                      <h3>Condition:</h3>
-                      <p>${listing.condition}</p>
-                    </div>
-                    <hr>
-                    <div class="listing-info">
-                      <h3>Seller:</h3>
-                      <p>${listing.seller_name}</p>
-                    </div>
-                    <div class="listing-info">
-                      <h3>Feedback:</h3>
-                      <p>${listing.seller_rating}</p>
-                    </div>
-                    <hr>
-                    <div class="listing-info">
-                      <h3>Shipping:</h3>
-                      <p>${listing.shipping}</p>
-                    </div>
-                    <a href="${listing.link}">visit link</a>
-                  </article>
-                  <figure>
-                    <img src="${listing.discogs_image}">
-                    <div>
-                      <p><span>${listing.price}</span></p>
-                    </div>
-                    <button class="add-container">
-                      <span>+</span>
-                    </button>
-                  </figure>
-                </div> 
-              </li>
-            `;
-      
-            listingsHtml += listingHtml;
-          }
-        }
-      
-        let html = `
-        <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
-          <div data-index="${index}" class="vert-title-container">         
-            <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
-            <img src="${object.thumbnail}">
-          </div>
-          <h2>${object.title}</h2>
-          <h4>${object.artists.toString().replace(/,/g, ", ")}</h4>
-          <div class="album-block">
-            <img class="album-bg" src="${object.image}">
-            <div class="album-content">
-              <div>
-                  <ul>${listingsHtml}</ul>
-                </div>
-              </div>
-            </div>
-          <div class="gradient-overlay"></div>
-        </div>
-        `;
-      
-        templateLiterals += html;
-      });
-      document.getElementById('favorites').innerHTML = templateLiterals
-    })
-    .then(function() {
-      [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
-        item.addEventListener('click', (e) => {
-          console.log(e.currentTarget, e.target)
-          e.currentTarget == e.target ? console.log("clicked frame") : console.log("other element")
-          if(e.currentTarget.classList.contains("closed")) {
-            dynamicCards(e.currentTarget.getAttribute("data-index"))
-          }
-        });
-      });
-    });
+//fetch("../mockdata.json")
+//    .then(response => response.json())
+//    .then(data => {
+//      let dataset = data.filter(function({id}) {
+//        return !this.has(id) && this.add(id)
+//      }, new Set)
+//      let templateLiterals
+//      dataset.forEach(async (object, index) => {
+//        let listingsHtml = '';
+//        console.log(object)
+//      
+//        for (const key in object.listings) {
+//          if (object.listings.hasOwnProperty(key)) {
+//            const listing = object.listings[key];
+//
+//            const listingHtml = `
+//              <li>
+//                <div class="listing">
+//                  <article>
+//                    <h3>${listing.discogs_title}</h3>
+//                    <div class="listing-info">
+//                      <h3>Condition:</h3>
+//                      <p>${listing.condition}</p>
+//                    </div>
+//                    <hr>
+//                    <div class="listing-info">
+//                      <h3>Seller:</h3>
+//                      <p>${listing.seller_name}</p>
+//                    </div>
+//                    <div class="listing-info">
+//                      <h3>Feedback:</h3>
+//                      <p>${listing.seller_rating}</p>
+//                    </div>
+//                    <hr>
+//                    <div class="listing-info">
+//                      <h3>Shipping:</h3>
+//                      <p>${listing.shipping}</p>
+//                    </div>
+//                    <a href="${listing.link}">visit link</a>
+//                  </article>
+//                  <figure>
+//                    <img src="${listing.discogs_image}">
+//                    <div>
+//                      <p><span>${listing.price}</span></p>
+//                    </div>
+//                    <button class="add-container">
+//                      <span>+</span>
+//                    </button>
+//                  </figure>
+//                </div> 
+//              </li>
+//            `;
+//      
+//            listingsHtml += listingHtml;
+//          }
+//        }
+//      
+//        let html = `
+//        <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
+//          <div data-index="${index}" class="vert-title-container">         
+//            <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
+//            <img src="${object.thumbnail}">
+//          </div>
+//          <h2>${object.title}</h2>
+//          <h4>${object.artists.toString().replace(/,/g, ", ")}</h4>
+//          <div class="album-block">
+//            <img class="album-bg" src="${object.image}">
+//            <div class="album-content">
+//              <div>
+//                  <ul>${listingsHtml}</ul>
+//                </div>
+//              </div>
+//            </div>
+//          <div class="gradient-overlay"></div>
+//        </div>
+//        `;
+//      
+//        templateLiterals += html;
+//      });
+//      document.getElementById('favorites').innerHTML = templateLiterals
+//    })
+//    .then(function() {
+//      [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
+//        item.addEventListener('click', (e) => {
+//          console.log(e.currentTarget, e.target)
+//          e.currentTarget == e.target ? console.log("clicked frame") : console.log("other element")
+//          if(e.currentTarget.classList.contains("closed")) {
+//            dynamicCards(e.currentTarget.getAttribute("data-index"))
+//          }
+//        });
+//      });
+//    });
 
 function dynamicCards(index) {
   [...document.querySelectorAll(".album-block-container")].forEach(function(item) {
@@ -214,10 +225,5 @@ function dynamicCards(index) {
   });
 }
 
-// getUserData(); 
+ getUserData(); 
 
-//[...document.querySelectorAll(".vert-title-container")].forEach(function (item) {
-//  item.addEventListener('click', (e) =>> {
-//   alert(e.target.getAttribute("data-index")) 
-//  })
-//}
