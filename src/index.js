@@ -55,8 +55,8 @@ async function getUserData() {
                     <div>
                       <p><span>${listing.price}</span></p>
                     </div>
-                    <input class="add-container" type="checkbox" id="${key}-heart"/>
-                    <label for="${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
+                    <input class="add-container" type="checkbox" id="${index}_${key}-heart"/>
+                    <label for="${index}_${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
                     </label>
                   </figure>
                 </div> 
