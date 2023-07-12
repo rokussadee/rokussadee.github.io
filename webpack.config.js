@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    main: './src/index.js',
+    favorites: './src/favorites.js',
     frontend: './src/frontend.js'
   },
-  output: {
+ output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
