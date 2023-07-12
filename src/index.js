@@ -15,7 +15,7 @@ async function getUserData() {
     .then(async (result) => {
       albumList = await getAlbumListings(result)
       console.log('FE: index.js line 19', albumList)
-      let templateLiterals = '';
+      let templateLiterals = document.getElementById("favorites");
       albumList.forEach(async (object, index) => {
         let listingsHtml = '';
       
@@ -86,9 +86,9 @@ async function getUserData() {
         </div>
         `;
       
-        templateLiterals += html;
+        templateLiterals.insertAdjacentHTML('beforeend', html);
       });
-      document.getElementById('favorites').innerHTML = templateLiterals
+//      document.getElementById('favorites').innerHTML = templateLiterals
     })
     .then(() => {
       [...document.querySelectorAll(".album-block-container")].forEach(function (item) {
@@ -122,7 +122,7 @@ async function getUserData() {
 async function getAlbumListings(spotifyList) {
   let data = await instance({
     method: 'post',
-    url: '/getDiscogsListings',
+    url: '/discogs/getDiscogsListings',
     data: {
       sort: 'newestfirst',
       list: spotifyList,
@@ -138,6 +138,80 @@ async function getAlbumListings(spotifyList) {
   return data.data
 }
 
+
+
+function dynamicCards(index) {
+  [...document.querySelectorAll(".album-block-container")].forEach(function(item) {
+    item.getAttribute("data-index") == index ? item.classList.replace("closed", "open") : item.classList.replace("open", "closed")
+  });
+};
+
+async function getUserId() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('access_token');
+
+  let user_id = await instance({
+    method: 'get',
+    url: '/api/getUserId',
+    transformResponse: [(data) => {
+      return JSON.parse(data)
+    }]
+  })
+  .then(response => {
+    console.log('user_id:', response.data.toString())
+    return response.data.toString()
+  })
+  .catch(e => {
+    console.log(e)
+  })
+
+  return user_id
+}
+
+async function checkWishlist(user_id, item_link) {
+  
+}
+
+async function addItemToWishlist(user_id, item_link) {
+  console.log('item_link:', item_link)
+  let data = await instance({
+    method: 'post',
+    url: '/crud/additem',
+    data: {
+      user_id: user_id,
+      item_link: item_link
+//      title: ,
+    },
+    transformResponse: [(data) => {
+      return JSON.parse(data)
+    }]
+  })
+
+  console.log(data)
+  return data 
+}
+
+async function removeItemFromWishlist(user_id, item_link) {
+  
+  console.log('item_link:', item_link)
+  let data = await instance({
+    method: 'delete',
+    url: '/crud/removeitem',
+    data: {
+      user_id: user_id,
+      item_link: item_link
+//      title: ,
+    },
+    transformResponse: [(data) => {
+      return JSON.parse(data)
+    }]
+  })
+
+  console.log(data)
+  return data
+}
+
+getUserData(); 
 //fetch("../mockdata.json")
 //    .then(response => response.json())
 //    .then(data => {
@@ -229,59 +303,3 @@ async function getAlbumListings(spotifyList) {
 //        });
 //      });
 //    });
-
-function dynamicCards(index) {
-  [...document.querySelectorAll(".album-block-container")].forEach(function(item) {
-    item.getAttribute("data-index") == index ? item.classList.replace("closed", "open") : item.classList.replace("open", "closed")
-  });
-};
-
-async function getUserId() {
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('access_token');
-
-  let user_id = await instance({
-    method: 'get',
-    url: '/api/getUserId',
-    transformResponse: [(data) => {
-      return JSON.parse(data)
-    }]
-  })
-  .then(response => {
-    console.log('user_id:', response.data.toString())
-    return response.data.toString()
-  })
-  .catch(e => {
-    console.log(e)
-  })
-
-  return user_id
-}
-
-async function checkWishlist(user_id, item_link) {
-  
-}
-
-async function addItemToWishlist(user_id, item_link) {
-  console.log('item_link:', item_link)
-  let data = await instance({
-    method: 'post',
-    url: '/crud/additem',
-    data: {
-      user_id: user_id,
-      item_link: item_link
-//      title: ,
-    },
-    transformResponse: [(data) => {
-      return JSON.parse(data)
-    }]
-  })
-
-  console.log(data)
-  return data 
-}
-
-function removeItemFromWishlist(item_link) {
-}
-
- getUserData(); 
