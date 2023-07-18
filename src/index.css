@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -75,21 +76,27 @@ p span {
   letter-spacing: -.15rem;
 }
 
-#favorites {
+#favorites, #wishlist {
   display: flex;
 }
+
 
 .album-block-container {
   position: relative;
   border: 1px solid black;
-  padding-left: 20px;
+  padding: 0 20px;
   overflow: hidden;
+  border-right: none;
+}
+
+.album-block-container:last-of-type {
+  border-right: 1px solid black;
 }
 
 .album-block {
   border-bottom: none;
   /* overflow: hidden; */
-  height: calc(100vh - 180px);
+  height: calc(100vh - 230px);
   overflow: scroll;
 }
 
@@ -106,28 +113,37 @@ p span {
   display:none;
 }
 
-.closed {
+#favorites .closed {
   width: 30px;
   padding-left: 0px;
 }
 
-.closed * {
+.closed > h2, .closed > h4, .closed .album-block, .closed .gradient-overlay {
   display: none;
 }
 
 .vert-title-container {
   position:absolute;
-  transform-origin: 0 0;
-  transform:translate(27px, 10px)  rotate(90deg);
   display:flex;
   top: 0;
   left: 0;
-  
+  justify-content: space-between;
 }
 .vert-title-container * {
-    display:flex;
-    white-space: nowrap;
-  }
+  display:flex;
+  white-space: nowrap;
+}
+
+.vert-title-container h3 {
+  transform-origin: 0 0;
+  transform:translate(27px, 10px)  rotate(90deg);
+}
+
+.vert-title-container .album-thumbnail {
+  transform: rotate(-90deg);
+  width: 20px;
+}
+
 /*.closed h3 span {
   display: block;
 }*/
@@ -148,7 +164,7 @@ p span {
 }
 
 .album-content ul {
-  margin: 20px;
+/*  margin: 20px;*/
 }
 
 .album-content li {
@@ -157,6 +173,7 @@ p span {
 
 .listing {
   display: flex;
+  padding-bottom: 50px;
   /* justify-content: space-between; */
 }
 
@@ -170,8 +187,9 @@ p span {
 
 .listing figure {
   position: relative;
-  height: 200px;
   width: 200px;
+  height: max-content;
+  aspect-ratio: 1;
   margin-left: 15px;
   border: 1px solid black;
 }
@@ -181,8 +199,9 @@ p span {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
 }
+
 
 .listing figure div {
   position: absolute;
@@ -196,17 +215,6 @@ p span {
   top: 0;
   background: none;
   border: none;
-}
-
-.add-container .active {
-  opacity:1;
-}
-
-.add-container span {
- position: absolute;
- top:0;
- right: 0;
- opacity: 0;
 }
 
 .outlined-heart {
@@ -288,4 +296,45 @@ hr {
 .listing-info p{
   line-height: 20px;
   flex-basis: 80%;
+}
+
+#wishlist .album-content {
+  height: 100%;
+}
+
+#wishlist .album-content > div{
+  height: 100%;
+}
+
+#wishlist #item-container {
+  display: flex;
+  height: 100%;
+  /*scroll-snap-type: x mandatory;
+  overflow-x: scroll;*/
+  flex-wrap: wrap;
+}
+
+#wishlist #item-container li {
+  height: 100%;
+/*  scroll-snap-align: start;*/
+}
+
+#wishlist #item-container .listing {
+  flex-direction:column;
+  }
+
+#wishlist .open{
+  height: 100%;
+}
+
+#wishlist .closed article {
+  display:none;
+}
+#wishlist #item-container .listing.open figure {
+}
+
+#wishlist figure img {
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
 }

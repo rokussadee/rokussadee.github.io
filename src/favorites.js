@@ -3,6 +3,7 @@ import instance from "./axios.js"
 async function getUserData() {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('access_token');
+  sessionStorage.setItem('spotifyAccessToken', token)
   let albumList;
 
   try {
@@ -17,6 +18,7 @@ async function getUserData() {
       console.log('FE: index.js line 19', albumList)
       let templateLiterals = document.getElementById("favorites");
       albumList.forEach(async (object, index) => {
+        console.log('the lost indexes:', index)
         let listingsHtml = '';
       
         for (const key in object.listings) {
@@ -70,7 +72,7 @@ async function getUserData() {
         <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
           <div data-index="${index}" class="vert-title-container">         
             <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
-            <img src="${object.thumbnail}">
+            <img class="album-thumbnail" src="${object.thumbnail}">
           </div>
           <h2>${object.title}</h2>
           <h4>${object.artists.toString().replace(/,/g, ", ")}</h4>
@@ -120,6 +122,7 @@ async function getUserData() {
 }
 
 async function getAlbumListings(spotifyList) {
+  console.log(spotifyList)
   let data = await instance({
     method: 'post',
     url: '/discogs/getDiscogsListings',
@@ -130,11 +133,13 @@ async function getAlbumListings(spotifyList) {
       format: '*'
     },
     transformResponse: [(data) => {
+      console.log(data)
       return JSON.parse(data)
     }]
   })
   console.log('FE: index.js line 66', data)
   
+  console.log(data.data)
   return data.data
 }
 
@@ -176,7 +181,7 @@ async function addItemToWishlist(user_id, item_link) {
   console.log('item_link:', item_link)
   let data = await instance({
     method: 'post',
-    url: '/crud/additem',
+    url: '/crud/postItem',
     data: {
       user_id: user_id,
       item_link: item_link
@@ -196,7 +201,7 @@ async function removeItemFromWishlist(user_id, item_link) {
   console.log('item_link:', item_link)
   let data = await instance({
     method: 'delete',
-    url: '/crud/removeitem',
+    url: '/crud/deleteItem',
     data: {
       user_id: user_id,
       item_link: item_link

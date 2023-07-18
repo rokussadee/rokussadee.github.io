@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     favorites: './src/favorites.js',
-    wishlist: './src/wishlist.js'
+    wishlist: './src/wishlist.js',
   },
  output: {
     filename: '[name].js',
