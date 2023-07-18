@@ -3,6 +3,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
 }
 
 body {
@@ -13,11 +17,54 @@ main {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
+  column-gap: 10px;
+}
+
+nav > ul {
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  list-style-type:none;
+  row-gap: 10px;
+}
+
+nav li {
+  flex-basis: 50%;
+  align-self: stretch;
+}
+
+nav > ul >li.active {
+  background: linear-gradient(330deg, rgba(255,177,0,.8), rgba(255,170,20,0.1), rgba(255,177,20,0) 70.71%);
+}
+
+nav li > div {
+  height: 100%;
+  border: 1px solid black;
+  padding: 0px 15px;
+}
+
+nav div a {
+  float: right;
+  display: inline;
+  text-decoration: none;
+  color: black;
+}
+
+nav h2 {
+  margin: 0;
+  width: min-content;
+  text-align: right;
+
+overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  white-space: normal; //this is the one that gets you all the time
 }
 
 section {
 /*  flex-basis: 80%;
-  */overflow:scroll;
+  */overflow:hidden;
 }
 
 html {
@@ -61,7 +108,7 @@ h4 {
   font-size: 1rem;
 }
 
-p, li {
+p {
   font-family: "neue-haas-grotesk-display", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -84,9 +131,11 @@ p span {
 .album-block-container {
   position: relative;
   border: 1px solid black;
-  padding: 0 20px;
-  overflow: hidden;
+  padding: 0 0px 0px 20px;
   border-right: none;
+}
+#wishlist .album-block-container {
+  padding: 0;
 }
 
 .album-block-container:last-of-type {
@@ -95,9 +144,18 @@ p span {
 
 .album-block {
   border-bottom: none;
-  /* overflow: hidden; */
+   overflow-x: hidden; 
   height: calc(100vh - 230px);
-  overflow: scroll;
+  overflow-y: scroll;
+  padding-right:20px;
+}
+
+#wishlist .album-block {
+  height: calc(100vh - 155px)
+}
+
+.album-block::-webkit-scrollbar {
+  display: none;
 }
 
 .album-bg {
@@ -194,6 +252,19 @@ p span {
   border: 1px solid black;
 }
 
+#wishlist .listing {
+  padding-bottom: 15px;
+}
+
+#wishlist .listing figure {
+  margin-right: 15px;
+  margin-left: 0;
+}
+  
+#wishlist ul {
+  margin-left:15px;
+}
+
 .listing figure img {
   position: absolute;
   left: 0;
@@ -205,8 +276,26 @@ p span {
 
 .listing figure div {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: -15px;
+  bottom: -10px;
+  color: black;
+}
+
+.listing figure div p span {
+  font-size: 1.5rem;
+  transition: all .1s ease-out;
+}
+
+.listing figure {
+  transition: all .1s ease-out;
+}
+
+.listing figure:hover {
+  transform: scale(103%);
+}
+
+.listing figure:hover div p span {
+  font-size: 1.8rem;
 }
 
 .listing figure .add-container {
@@ -229,53 +318,70 @@ input[type="checkbox"] {
     display: none;
 }
 
-input[type="checkbox"] + label:before {
-  font-family: "Material Symbols Outlined";
-    content: "\e87d";
-    font-size: 30px;
-    top: 0;
-    right: 0;
-    border: 1px solid transparent;    
-    border-radius: 3px;
-    display: block;
-    position: absolute;
+input[type="checkbox"]+label:before{
+  content: ""; 
+  position: absolute;
+    font-size: 20px;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+    height: 30px;
+    background: linear-gradient(330deg, rgba(255,177,0,.8), rgba(255,240,240,1), rgba(255,255,255,1) 70.71%);
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
 	transition:  .5s ease;
 }
- 
+
+input[type="checkbox"]+label:after {
+   font-family: "Material Icons";
+    content: "\e87d";
+  position: absolute;
+    font-size: 25px;
+    top: 8.3px;
+    right: 8.3px;
+    opacity: 0;
+      color: white;
+}
+
 input[type="checkbox"]:checked + label:before {
-    border: 1px solid transparent;
-    background-color: transparent;
+    border: 1px solid white;
+    background: linear-gradient(330deg, rgba(255,177,0,.8), rgba(255,170,20,0.7), rgba(255,177,20,0.6) 70.71%);
+  animation: checkbox-bg 125ms 250ms cubic-bezier(.2,.4,.23,1) forwards;
 }
 
 input[type="checkbox"]:checked + label:after {
-   font-family: "Material Icons";
-    content: "\e87d";
-    font-size: 30px;
-    position: absolute;
-    top: .5em;
-    right: 1px;
-	color: red;
+  	color: white; 
 /*	transition:  .5s ease; */
-  opacity: 0;
-  transform-origin: 0% 100%;
   animation: checkbox-check 125ms 250ms cubic-bezier(.2,.4,.23,1) forwards;
+}
+
+@keyframes checkbox-bg {
+
+  0%{
+    background: linear-gradient(330deg, rgba(255,177,0,.8), rgba(255,170,20,0.7), rgba(255,177,20,0.6) 70.71%);
+  }
+  100%{    
+    background-image: radial-gradient(49% 81% at 45% 47%, #FFE20345 0%, #073AFF00 100%),radial-gradient(33% 96% at 87% 81%, #FF7C00FF 1%, #FF000000 99%),radial-gradient(142% 91% at 83% 7%, #FFDB00FF 1%, #FF000000 99%),radial-gradient(142% 91% at -6% 74%, #FFB300FF 1%, #FF000000 99%),radial-gradient(142% 91% at 111% 84%, #FFE100B8 0%, #FF0000FF 100%);
+  }
 }
 
 @keyframes checkbox-check {
   0%{
     opacity: 0;
-    height: 0;
-    transform: translate3d(0,0,0);
+      color: white;
+
   }
   33%{
     opacity: .2;
-    height: 0;
-    transform: translate3d(0,-.2em,0) ;
   }
   100%{    
-    opacity: 1;
-    height: .5em;    
-    transform: translate3d(0,-.5em,0) ;
+    opacity: .9;
+    filter: drop-shadow(0px 0px 5px ) ;
   }
 }
 
@@ -315,7 +421,7 @@ hr {
 }
 
 #wishlist #item-container li {
-  height: 100%;
+  
 /*  scroll-snap-align: start;*/
 }
 
@@ -337,4 +443,12 @@ hr {
   height: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+}
+
+.card-price {
+  z-index: +1000;
+  padding: 10px;
+  overflow: visible;
+  background: url('../dist/assets/price_tag.svg') no-repeat center;
+  background-size: contain;
 }

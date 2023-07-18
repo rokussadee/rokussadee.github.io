@@ -2,6 +2,9 @@ import instance from "./axios.js";
 
 async function getUserWishlist() {
   try {
+    //    fetch('../mockwishlist.json')
+    //.then(response => response.json())
+
     const token = sessionStorage.getItem('spotifyAccessToken');
     instance.get('/api/getUserId', {
       headers: {
@@ -43,8 +46,8 @@ async function getUserWishlist() {
                 <div class="listing ${index == 0 ? "open" : "closed"}">
                   <figure>
                     <img src="${listing.discogs_image}">
-                    <div>
-                      <p><span>${listing.price}</span></p>
+                    <div style="transform: rotate(${Math.floor(Math.random() * 20) - 25}deg);">
+                     <p class="card-price"><span>${listing.price}</span></p>
                     </div>
                     <input class="add-container" type="checkbox" id="${index}-heart" data-id="${listing.item_link}" checked/>
                     <label for="${index}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
@@ -79,68 +82,6 @@ async function getUserWishlist() {
   }
 }
 
-//fetch("../mockdata.json")
-//    .then(response => response.json())
-//    .then(data => {
-//      let dataset = data.filter(function({id}) {
-//        return !this.has(id) && this.add(id)
-//      }, new Set)
-//      let templateLiterals =`
-//        <div class="album-block-container open">
-//          <div class="album-block">
-//            <img class="album-bg" src="${dataset[0].image}">
-//            <div class="album-content">
-//              <div>
-//                  <ul id="item-container"></ul>
-//                </div>
-//              </div>
-//            </div>
-//          <div class="gradient-overlay"></div>
-//        </div>
-//       `;
-//      document.getElementById("wishlist").innerHTML = templateLiterals;
-//      dataset.forEach(async (object, index) => {
-//        let listingsHtml = '';
-//        console.log(object, index)
-//      
-//        for (const key in object.listings) {
-//          console.log(key)
-//          if (key == 0) {
-//            const listing = object.listings[0];
-//
-//            const listingHtml = `
-//               <li>
-//                <div class="listing ${index == 0 ? "open" : "closed"}">
-//                  <figure>
-//                    <img src="${listing.discogs_image}">
-//                    <div>
-//                      <p><span>${listing.price}</span></p>
-//                    </div>
-//                    <input class="add-container" type="checkbox" id="${index}_${key}-heart" data-id="${listing.link}" />
-//                    <label for="${index}_${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
-//                    </label>
-//                  </figure>
-//                </div> 
-//              </li>
-//            `;
-//            let row = 6 % (index + 1);
-//
-//            console.log(index + 1, row);
-//
-//            listingsHtml += listingHtml;
-//          }
-//        }
-//      
-//      
-//        document.getElementById("item-container").insertAdjacentHTML('beforeend', listingsHtml);
-//      });
-//    })
-//    .then(() => {
-//      
-//    })
-//    .catch((e) => {
-//      console.log(e)
-//    })
 async function getDiscogsWishlist(link_array) {
   console.log(link_array)
   let data = await instance({
@@ -196,7 +137,6 @@ async function addItemToWishlist(user_id, item_link) {
     data: {
       user_id: user_id,
       item_link: item_link
-//      title: ,
     },
     transformResponse: [(data) => {
       return JSON.parse(data)
@@ -215,7 +155,6 @@ async function removeItemFromWishlist(user_id, item_link) {
     data: {
       user_id: user_id,
       item_link: item_link
-//      title: ,
     },
     transformResponse: [(data) => {
       return JSON.parse(data)

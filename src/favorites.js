@@ -1,12 +1,22 @@
 import instance from "./axios.js"
 
 async function getUserData() {
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('access_token');
-  sessionStorage.setItem('spotifyAccessToken', token)
+  let token
+  const params =new URLSearchParams(window.location.search) 
+  console.log( params.get('access_token'), sessionStorage.getItem('spotifyAccessToken'))
+  if(params.get('access_token') == null || params.get('access_token') == 'null') {
+      token = sessionStorage.getItem('spotifyAccessToken')
+  } else {
+    token = params.get('access_token')
+    sessionStorage.setItem('spotifyAccessToken', token)
+  }
+
   let albumList;
 
   try {
+//    fetch('../mockfavorites.json')
+//    .then(response => response.json())
+//    .then(albumList => {
     instance.get(`api/getUser?token=${token}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -49,13 +59,13 @@ async function getUserData() {
                       <h3>Shipping:</h3>
                       <p>${listing.shipping}</p>
                     </div>
-                    <a href="${listing.link}">visit link</a>
+                    <a href="${listing.link}" target="_blank">visit link</a>
                   </article>
                   <figure>
                     <img src="${listing.discogs_image}">
-                    <div>
-                      <p><span>${listing.price}</span></p>
-                    </div>
+                    <div style="transform: rotate(${Math.floor(Math.random() * 20) - 25}deg);">
+                     <p class="card-price"><span>${listing.price}</span></p>
+                     </div>
                     <input class="add-container" type="checkbox" id="${index}_${key}-heart" data-id="${listing.link}" />
                     <label for="${index}_${key}-heart" style="font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;">
                     </label>
@@ -72,7 +82,6 @@ async function getUserData() {
         <div data-index="${index}"class="album-block-container ${index == 0 ? "open" : "closed"}">
           <div data-index="${index}" class="vert-title-container">         
             <h3>${object.artists.toString().replace(/,/g, ", ")}: &nbsp;<span>${object.title}</span></h3>
-            <img class="album-thumbnail" src="${object.thumbnail}">
           </div>
           <h2>${object.title}</h2>
           <h4>${object.artists.toString().replace(/,/g, ", ")}</h4>
