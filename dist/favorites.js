@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/lib/axios.js\");\n\n\nconst instance = axios__WEBPACK_IMPORTED_MODULE_0__[\"default\"].create({\n  baseURL: 'http://localhost:8888'\n})\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (instance);\n\n\n//# sourceURL=webpack://web-2-frontend-22-23-rokussadee/./src/axios.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/lib/axios.js\");\n\n\nconst instance = axios__WEBPACK_IMPORTED_MODULE_0__[\"default\"].create({\n  baseURL: 'https://discjunky-api-web2ss.onrender.com'\n})\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (instance);\n\n\n//# sourceURL=webpack://web-2-frontend-22-23-rokussadee/./src/axios.js?");
 
 /***/ }),
 
