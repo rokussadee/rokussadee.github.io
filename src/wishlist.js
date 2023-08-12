@@ -67,7 +67,6 @@ async function getUserWishlist() {
       const user_id = await getUserId();
       [...document.querySelectorAll("input.add-container")].forEach(function(item) {
         console.log(item.getAttribute("data-id"))
-//        checkWishlist(user_id, item)
         item.addEventListener('change', (e) => {
           const item_link = e.target.getAttribute("data-id")
           console.log(item_link)
