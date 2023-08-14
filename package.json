@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "minify-css": "postcss src/index.css > dist/index.min.css",
-    "start": "live-server . --open=./dist/index.html",
+    "start": "live-server ./dist --open=./index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"

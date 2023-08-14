@@ -141,6 +141,7 @@ async function getAlbumListings(spotifyList) {
       limit: 1,
       format: '*'
     },
+    mode: "cors",
     transformResponse: [(data) => {
       console.log(data)
       return JSON.parse(data)
