@@ -2,7 +2,7 @@
 
 # About
 
-The Front end was made using vanilla JavaScript and CSS. Bundling was done using webpack. For more information about the backend refer to the Backend repository's [README.md](https://github.com/EHB-MCT/web-2-backend-22-23-rokussadee/blob/development/README.md) file.
+The Front end was made using vanilla JavaScript and CSS. Bundling was done using webpack. For more information about the backend refer to the [Backend repository](https://github.com/EHB-MCT/web-2-backend-22-23-rokussadee)'s [README.md](https://github.com/EHB-MCT/web-2-backend-22-23-rokussadee/blob/development/README.md) file.
 
 # Design
 
